@@ -3,7 +3,7 @@ import dht11
 import json
 from flask import Flask, Response
 
-app = Flask(__name__)
+app = Flask(_name_)
 
 # initialize GPIO
 GPIO.setwarnings(False)
@@ -15,35 +15,42 @@ instance = dht11.DHT11(pin=17)
 
 @app.route('/')
 def main():
-
   result = instance.read()
 
   if result.is_valid():
     templateData = {
-        'temperature' : result.temperature,
-        'humidity' : result.humidity
-    }
+      'temperature' : result.temperature,
+      'humidity' : result.humidity
+  }
   else:
-    templateData = { }
+    templateData = {}
 
   # show to user temperature and humidity values from device
   return Response(json.dumps(templateData), mimetype='application/json')
 
-@app.route('/<action>')
-def action(action):
-
+@app.route('/temperature')
+def temperature():
   result = instance.read()
-  action_result = 'empty'
 
   if result.is_valid():
-    if action == "temperature":
-      action_result = result.temperature
-    if action == "humidity":
-      action_result = result.humidity
+    templateData = {
+      'temperature': result.temperature
+    }
+  else:
+    templateData = {}
 
-  templateData = {
-    action : action_result
-  }
+  return Response(json.dumps(templateData), mimetype='application/json')
+
+@app.route('/humidity')
+def humidity():
+  result = instance.read()
+  
+  if result.is_valid():
+    templateData = {
+      'humidity': result.humidity
+    }
+  else:
+    templateData = {}
 
   return Response(json.dumps(templateData), mimetype='application/json')
 
