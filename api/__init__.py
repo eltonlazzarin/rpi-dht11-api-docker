@@ -17,6 +17,9 @@ instance = dht11.DHT11(pin=17)
 def main():
   result = instance.read()
 
+  while (result.is_valid() != True):
+    result = instance.read()
+
   if result.is_valid():
     templateData = {
       'temperature' : result.temperature,
@@ -31,6 +34,9 @@ def main():
 @app.route('/temperature')
 def temperature():
   result = instance.read()
+  
+  while (result.is_valid() != True):
+    result = instance.read()
 
   if result.is_valid():
     templateData = {
@@ -44,6 +50,9 @@ def temperature():
 @app.route('/humidity')
 def humidity():
   result = instance.read()
+
+  while (result.is_valid() != True):
+    result = instance.read()
   
   if result.is_valid():
     templateData = {
