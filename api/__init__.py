@@ -3,7 +3,7 @@ import dht11
 import json
 from flask import Flask, Response
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # initialize GPIO
 GPIO.setwarnings(False)
