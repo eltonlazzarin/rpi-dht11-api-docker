@@ -1,6 +1,8 @@
-FROM arm32v7/python:3
+FROM arm32v7/python:3-slim
 
-RUN apt-get update
+RUN apt-get update && \
+apt-get install -y python3-pip
+
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
