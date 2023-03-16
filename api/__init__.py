@@ -17,50 +17,54 @@ instance = dht11.DHT11(pin=17)
 def main():
   result = instance.read()
 
-  while (result.is_valid() != True):
+  retries = 0
+  while (result.is_valid() is not True and retries <= 3):
     result = instance.read()
+    retries += 1 
 
   if result.is_valid():
     templateData = {
       'temperature' : result.temperature,
       'humidity' : result.humidity
   }
+    # show to user temperature and humidity values from device
+    return Response(json.dumps(templateData), mimetype='application/json')
   else:
-    templateData = {}
-
-  # show to user temperature and humidity values from device
-  return Response(json.dumps(templateData), mimetype='application/json')
+    # show bad readings response from sensor
+    return Response("No response from sensors", status=404, mimetype='text/plain')
 
 @app.route('/temperature')
 def temperature():
   result = instance.read()
-  
-  while (result.is_valid() != True):
+
+  retries = 0
+  while (result.is_valid() is not True and retries <= 3):
     result = instance.read()
+    retries += 1 
 
   if result.is_valid():
     templateData = {
       'temperature': result.temperature
-    }
+  }
+    return Response(json.dumps(templateData), mimetype='application/json')
   else:
-    templateData = {}
-
-  return Response(json.dumps(templateData), mimetype='application/json')
+    return Response("No response from sensor", status=404, mimetype='text/plain')
 
 @app.route('/humidity')
 def humidity():
   result = instance.read()
 
-  while (result.is_valid() != True):
+  retries = 0
+  while (result.is_valid() is not True and retries <= 3):
     result = instance.read()
-  
+    retries += 1
+
   if result.is_valid():
     templateData = {
       'humidity': result.humidity
-    }
+  }
+    return Response(json.dumps(templateData), mimetype='application/json')
   else:
-    templateData = {}
-
-  return Response(json.dumps(templateData), mimetype='application/json')
+    return Response("No response from sensor", status=404, mimetype='text/plain')
 
 app.run(debug=True, host='0.0.0.0', port=5000)
