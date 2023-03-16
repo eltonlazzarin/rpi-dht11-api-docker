@@ -30,7 +30,7 @@ def main():
     # show to user temperature and humidity values from device
     return Response(json.dumps(templateData), mimetype='application/json')
   else:
-    # show bad readings response from sensor
+    # show bad readings response from sensors
     return Response("No response from sensors", status=404, mimetype='text/plain')
 
 @app.route('/temperature')
