@@ -24,8 +24,8 @@ def main():
 
   if result.is_valid():
     templateData = {
-      'temperature' : result.temperature,
-      'humidity' : result.humidity
+      'temperature' : str(result.temperature),
+      'humidity' : str(result.humidity)
   }
     # show to user temperature and humidity values from device
     return Response(json.dumps(templateData), mimetype='application/json')
@@ -44,7 +44,7 @@ def temperature():
 
   if result.is_valid():
     templateData = {
-      'temperature': result.temperature
+      'temperature': str(result.temperature)
   }
     return Response(json.dumps(templateData), mimetype='application/json')
   else:
@@ -61,7 +61,7 @@ def humidity():
 
   if result.is_valid():
     templateData = {
-      'humidity': result.humidity
+      'humidity': str(result.humidity)
   }
     return Response(json.dumps(templateData), mimetype='application/json')
   else:
