@@ -28,7 +28,7 @@ sudo usermod -aG docker <device-user>
 sudo reboot
 ```
 
-## How to Connect DHT11 on Raspberry Pi 3/4
+## :information_source: How to Connect DHT11 on Raspberry Pi 3/4
 
 To use this image on the Raspberry Pi 3/4 assemble your electronic circuit as shown below
 
